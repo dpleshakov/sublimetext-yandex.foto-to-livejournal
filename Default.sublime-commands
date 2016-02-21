@@ -1,0 +1,4 @@
+[
+    { "caption": "LJ: Prepare text", "command": "lj_prepare" },
+    { "caption": "LJ: Count lines", "command": "lj_count" },
+]

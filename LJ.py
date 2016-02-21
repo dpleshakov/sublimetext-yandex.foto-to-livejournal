@@ -1,4 +1,6 @@
 import re
+import sublime
+import sublime_plugin
 
 
 CLEAR_RULES = [
@@ -26,7 +28,7 @@ def _make_rules(text, rules):
     return text
 
 
-def clear(text):
+def prepare(text):
     return _make_rules(text, CLEAR_RULES)
 
 
@@ -41,10 +43,18 @@ def count(text):
 def main():
 	result = ""
 	with open('test.txt', 'r') as h_file:
-		result = clear(h_file.read())
+		result = prepare(h_file.read())
 
 	result = count(result)
 	print(result)
+
+
+class LjPrepareCommand(sublime_plugin.TextCommand):
+    def run(self, edit):
+        all_file_region = sublime.Region(0, self.view.size())
+        text = self.view.substr(all_file_region)
+        text = prepare(text)
+        self.view.replace(edit, all_file_region, text)
 
 
 if __name__ == '__main__':
